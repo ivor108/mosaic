@@ -1,10 +1,6 @@
 package com.company;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
+import java.io.*;
 
 public class Main {
     private static int[][] mosaic;
@@ -26,13 +22,13 @@ public class Main {
         if (mosaic[i - 1][j] == 1){
             part(i - 1, j);
         }
-        else if(mosaic[i][j + 1] == 1){
+        if(mosaic[i][j + 1] == 1){
             part(i, j + 1);
         }
-        else if(mosaic[i + 1][j] == 1){
+        if(mosaic[i + 1][j] == 1){
             part(i + 1, j);
         }
-        else if(mosaic[i][j - 1] == 1){
+        if(mosaic[i][j - 1] == 1){
             part(i, j - 1);
         }
     }
@@ -56,19 +52,21 @@ public class Main {
         return count;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         int K;
         int L;
-        //int[][] mosaic = new int[0][0];
+
         try {
             FileReader fr  = new FileReader("INPUT.TXT");
             BufferedReader reader = new BufferedReader(fr);
+
             String first =  reader.readLine();
 
             K = Integer.parseInt(first.split(" ")[0]);
             L = Integer.parseInt(first.split(" ")[1]);
             mosaic = new int[K + 2][L + 2];
+
             for(int i = 0; i < K + 2; i++)
             {
                 String[] line = new String[L + 2];
@@ -85,14 +83,26 @@ public class Main {
                     mosaic[i][j] = Integer.parseInt(line[j]);
                 
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 
+        try {
+            FileWriter writer = new FileWriter("OUTPUT.TXT", false);
+            writer.write(Integer.toString(solve()));
+            writer.flush();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*
         print2d(mosaic);
         System.out.println("------------");
         System.out.println(solve());
         System.out.println("------------");
         print2d(mosaic);
+         */
     }
 }
